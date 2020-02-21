@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../helper/locations.dart' as locations;
 
 class SearchScreen extends StatefulWidget {
   static const String id = 'search_screen';
@@ -9,12 +10,24 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchState extends State<SearchScreen> {
-  GoogleMapController mapController;
-
   final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+  final Map<String, Marker> _markers = {};
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    final googleOffices = await locations.getGoogleOffices();
+    setState(() {
+      _markers.clear();
+      for (final office in googleOffices.offices) {
+        final marker = Marker(
+          markerId: MarkerId(office.name),
+          position: LatLng(office.lat, office.lng),
+          infoWindow: InfoWindow(
+            title: office.name,
+            snippet: office.address,
+          ),
+        );
+        _markers[office.name] = marker;
+      }
+    });
   }
 
   @override
@@ -25,10 +38,11 @@ class _SearchState extends State<SearchScreen> {
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: _center,
-            zoom: 11.0,
+            zoom: 7.5,
           ),
-        ),
-      ),
+          markers: _markers.values.toSet(),
+        )
+      )
     );
   }
 }
