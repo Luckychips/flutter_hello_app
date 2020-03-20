@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'dart:async';
+import 'dart:developer';
 import '../helper/locations.dart' as locations;
 
 const double CAMERA_ZOOM = 13;
@@ -24,7 +25,7 @@ class _SearchState extends State<SearchScreen> {
   Set<Polyline> _polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  String googleAPIKey = "AIzaSyDHsLk-YTzysDAXroyjdXxJeSgD5KXKrFs";
+  String googleAPIKey = "GOOGLE MAP KEY";
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
 
@@ -67,17 +68,18 @@ class _SearchState extends State<SearchScreen> {
   }
 
   setPolylines() async {
-    List<PointLatLng> result = await
-    polylinePoints?.getRouteBetweenCoordinates(
-        googleAPIKey,
-        SOURCE_LOCATION.latitude,
-        SOURCE_LOCATION.longitude,
-        DEST_LOCATION.latitude,
-        DEST_LOCATION.longitude);
+    List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
+      googleAPIKey,
+      SOURCE_LOCATION.latitude,
+      SOURCE_LOCATION.longitude,
+      DEST_LOCATION.latitude,
+      DEST_LOCATION.longitude
+    );
+
     if (result.isNotEmpty) {
-      result.forEach((PointLatLng point){
-        polylineCoordinates.add(
-            LatLng(point.latitude, point.longitude));
+      log('data: $result');
+      result.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
     setState(() {
@@ -94,20 +96,20 @@ class _SearchState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     CameraPosition initialLocation = CameraPosition(
-        zoom: CAMERA_ZOOM,
-        bearing: CAMERA_BEARING,
-        tilt: CAMERA_TILT,
-        target: SOURCE_LOCATION
+      zoom: CAMERA_ZOOM,
+      bearing: CAMERA_BEARING,
+      tilt: CAMERA_TILT,
+      target: SOURCE_LOCATION
     );
     return GoogleMap(
-        myLocationEnabled: true,
-        compassEnabled: true,
-        tiltGesturesEnabled: false,
-        markers: _markers.values.toSet(),
-        polylines: _polylines,
-        mapType: MapType.normal,
-        initialCameraPosition: initialLocation,
-        onMapCreated: onMapCreated
+      myLocationEnabled: true,
+      compassEnabled: true,
+      tiltGesturesEnabled: false,
+      markers: _markers.values.toSet(),
+      polylines: _polylines,
+      mapType: MapType.normal,
+      initialCameraPosition: initialLocation,
+      onMapCreated: onMapCreated
     );
   }
 }
