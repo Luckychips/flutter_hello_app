@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 import 'dart:developer';
 import '../helper/locations.dart' as locations;
@@ -25,7 +26,7 @@ class _SearchState extends State<SearchScreen> {
   Set<Polyline> _polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  String googleAPIKey = "GOOGLE MAP KEY";
+  String googleAPIKey = DotEnv().env['GOOGLE_MAP_KEY'];
   BitmapDescriptor sourceIcon;
   BitmapDescriptor destinationIcon;
 
