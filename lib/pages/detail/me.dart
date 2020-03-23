@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import './detail/me.dart';
 
-class MeScreen extends StatelessWidget {
-  static const String id = 'me_screen';
+class DetailMeScreen extends StatelessWidget {
+  static const String id = 'detail_me_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +10,14 @@ class MeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text("me"),
+            Text("DETAIL ME"),
             Container(
               child: RaisedButton(
-                color: Colors.lightBlue,
-                child: Text('move to detail',
+                color: Colors.amber,
+                child: Text('go to back',
                   style: TextStyle(fontSize: 18, color: Colors.white)),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DetailMeScreen())
-                  );
+                  Navigator.pop(context);
                 }
               )
             )
