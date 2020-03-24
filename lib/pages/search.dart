@@ -4,7 +4,6 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:async';
 import 'dart:developer';
-import '../helper/locations.dart' as locations;
 
 const double CAMERA_ZOOM = 13;
 const double CAMERA_TILT = 0;
