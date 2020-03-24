@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
+import '../../components/AppNavBar.dart';
 import '../../models/BookItem.dart';
 
 List<BookItem> parse(String body) {
@@ -51,6 +52,7 @@ class _DetailMeState extends State<DetailMeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppNavBar(title: 'detail - me'),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
